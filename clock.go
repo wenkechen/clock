@@ -13,10 +13,10 @@ var once sync.Once
 
 var expireTime time.Time
 
-func Sync(t time.Time, expireDate string) error {
+func Sync(t time.Time, expireTimeStr string) error {
 	now = t
 	var err error
-	expireTime, err = time.Parse(time.DateOnly, expireDate)
+	expireTime, err = time.Parse(time.DateTime, expireTimeStr)
 	if err != nil {
 		return err
 	}
