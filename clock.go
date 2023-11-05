@@ -1,8 +1,11 @@
 package clock
 
 import (
+	"fmt"
 	"sync"
 	"time"
+
+	"github.com/beevik/ntp"
 )
 
 var now = time.Now()
@@ -40,4 +43,16 @@ func Now() time.Time {
 
 func IsExpired() bool {
 	return expireTime.Before(now)
+}
+
+func NetTime() time.Time {
+	for i := 1; i <= 6; i++ {
+		serverAddr := fmt.Sprintf("ntp%d.aliyun.com", i)
+		currentTime, err := ntp.Time(serverAddr)
+		if err == nil {
+			return currentTime
+		}
+	}
+
+	return time.Time{}
 }
